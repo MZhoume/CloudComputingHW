@@ -1,0 +1,18 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend Service for Cloud Computing Homework 1",
+  "main": "index.js",
+  "author": "Ming, Emily",
+  "license": "ISC",
+  "private": true,
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "express": "^4.14.1",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1"
+  }
+}

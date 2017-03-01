@@ -1,0 +1,16 @@
+{
+  "name": "lambda",
+  "version": "1.0.0",
+  "description": "Lambda Functions helper for Cloud Computing Homework",
+  "main": "index.js",
+  "author": "Ming",
+  "license": "ISC",
+  "private": true,
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1"
+  }
+}

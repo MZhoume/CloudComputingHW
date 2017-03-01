@@ -1,0 +1,21 @@
+{
+  "name": "lambda",
+  "version": "1.0.0",
+  "description": "Lambda Functions helper for Cloud Computing Homework",
+  "author": "Ming",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-lambda": "0.0.5",
+    "@types/aws-sdk": "0.0.42",
+    "@types/form-data": "0.0.32",
+    "@types/node": "^6.0.48",
+    "@types/request": "0.0.33",
+    "@types/request-promise": "^4.1.33",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-lambda-deploy": "0.0.2",
+    "gulp-typescript": "^3.0.0",
+    "gulp-zip": "^3.2.0",
+    "typescript": "^2.0.3"
+  }
+}
