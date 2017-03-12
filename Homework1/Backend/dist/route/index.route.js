@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-exports.index = express_1.Router();
-exports.index.get('/', (req, res) => {
+exports.indexRoute = express_1.Router();
+exports.indexRoute.get('/', (req, res) => {
     res.send('Hello index');
 });
-exports.index.get('/hello', (req, res) => {
+exports.indexRoute.get('/hello', (req, res) => {
     res.send('hello hello');
 });
+//# sourceMappingURL=index.route.js.map

@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const typescript = require('gulp-typescript');
 const del = require('del');
 const ebDeploy = require('gulp-elasticbeanstalk-deploy');
+const sourcemaps = require('gulp-sourcemaps');
 
 const paths = {
     src: ['src/**/*.ts', '!src/interface', '!src/interface/**'],
@@ -18,11 +19,13 @@ gulp.task('clean', function () {
 
 gulp.task('build', ['clean'], function () {
     return gulp.src(paths.src)
+        .pipe(sourcemaps.init())
         .pipe(typescript({
             target: 'ES6',
             module: 'CommonJS'
         }))
         .js
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest(paths.dist));
 });
 
