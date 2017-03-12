@@ -11,3 +11,5 @@ Follow along with the course linked above. To start the server:
 npm install
 npm start
 ```
+
+![alt tag](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
