@@ -1,0 +1,28 @@
+<!--<div class="row">-->
+    <!--<div class="col-md-12">
+        <div class = "panel panel-default">-->
+            <!--<div class="panel-heading">
+                <h6 class="panel-title"> Add New Marker</h6>
+            </div>-->
+        <!--<div class="panel-body">-->
+            <form (submit)="addMarker()">
+                <label>Location Name</label>
+                <input type="text" [(ngModel)]="markerName" name="markerName">
+
+                <label>Latitude</label>
+                <input type="text" [(ngModel)]="markerLat" name="markerLat">
+
+                <label>Longitude</label>
+                <input type="text" [(ngModel)]="markerLng" name="markerLng">
+
+                <label>Draggable</label>
+                <select [(ngModel)]="markerDraggable" name="markerDraggable">
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                </select>
+                <button class="btn btn-default" >Map it!</button>
+            </form>
+        <!--</div>
+    </div>
+    </div>
+</div>-->
