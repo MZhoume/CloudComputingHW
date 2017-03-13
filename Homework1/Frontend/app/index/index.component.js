@@ -125,6 +125,8 @@ var IndexComponent = (function () {
     IndexComponent.prototype.handleWipeMap = function () {
         console.log("wiping the map...");
         this.removeAllMarkers();
+        this.tweets = [];
+        this.tweetListHeader = "";
     };
     __decorate([
         core_1.Output(), 

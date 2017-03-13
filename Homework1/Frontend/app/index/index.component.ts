@@ -145,6 +145,8 @@ export class IndexComponent {
     handleWipeMap() {
         console.log("wiping the map...")
         this.removeAllMarkers();
+        this.tweets = []
+        this.tweetListHeader = "";
     }
     // end of map
 }
