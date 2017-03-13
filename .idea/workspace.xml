@@ -3,18 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="760b0161-1aba-48f8-bd09-e8a012b0abd2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Homework1/Backend/dist/index.js" afterPath="$PROJECT_DIR$/Homework1/Backend/dist/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Homework1/Backend/dist/index.js.map" afterPath="$PROJECT_DIR$/Homework1/Backend/dist/index.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Homework1/Backend/dist/route/index.route.js" afterPath="$PROJECT_DIR$/Homework1/Backend/dist/route/index.route.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Homework1/Backend/dist/route/index.route.js.map" afterPath="$PROJECT_DIR$/Homework1/Backend/dist/route/index.route.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Homework1/Backend/dist/route/search.route.js" afterPath="$PROJECT_DIR$/Homework1/Backend/dist/route/search.route.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Homework1/Backend/dist/route/search.route.js.map" afterPath="$PROJECT_DIR$/Homework1/Backend/dist/route/search.route.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Homework1/Backend/dist/twitter/stream.js" afterPath="$PROJECT_DIR$/Homework1/Backend/dist/twitter/stream.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Homework1/Backend/dist/twitter/stream.js.map" afterPath="$PROJECT_DIR$/Homework1/Backend/dist/twitter/stream.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Homework1/Backend/src/index.ts" afterPath="$PROJECT_DIR$/Homework1/Backend/src/index.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Homework1/Backend/src/route/index.route.ts" afterPath="$PROJECT_DIR$/Homework1/Backend/src/route/index.route.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Homework1/Backend/src/route/search.route.ts" afterPath="$PROJECT_DIR$/Homework1/Backend/src/route/search.route.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Homework1/Backend/src/twitter/stream.ts" afterPath="$PROJECT_DIR$/Homework1/Backend/src/twitter/stream.ts" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -331,7 +319,14 @@
       <option name="project" value="LOCAL" />
       <updated>1489375856284</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="finish tweet straming">
+      <created>1489375876744</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1489375876744</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView">
