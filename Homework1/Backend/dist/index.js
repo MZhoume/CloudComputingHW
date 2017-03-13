@@ -43,5 +43,5 @@ const app = e();
 app.listen(port, () => {
     console.log(`App started on port: ${port}...`);
 });
-new stream_1.TwitterStreamRetriever(config_1.twitConfig, config_1.esConfig).bootstrap();
+new stream_1.TwitterStreamRetriever(config_1.twitConfig).bootstrap();
 //# sourceMappingURL=index.js.map

@@ -7,6 +7,7 @@ import {twitConfig, esConfig} from './config';
 
 import { indexRoute } from './route/index.route';
 import { searchRouter } from './route/search.route';
+import {EsService} from "./elasticsearch/esservice";
 
 const port = normalizePort(process.env.PORT || 8081);
 
@@ -49,4 +50,4 @@ app.listen(port, () => {
     console.log(`App started on port: ${port}...`);
 });
 
-new TwitterStreamRetriever(twitConfig, esConfig).bootstrap();
+new TwitterStreamRetriever(twitConfig).bootstrap();
