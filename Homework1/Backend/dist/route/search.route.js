@@ -1,13 +1,107 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const esservice_1 = require("../elasticsearch/esservice");
 exports.searchRouter = express_1.Router();
-exports.searchRouter.get('/', (req, res) => {
+const esClient = esservice_1.EsService.getEsClient();
+exports.searchRouter.get('/all', (req, res) => {
+    let search = {
+        index: "twitter",
+        body: {
+            size: 1000,
+            sort: [
+                { id: { order: "desc" } }
+            ],
+            query: {}
+        }
+    };
+    let from = req.param('from');
+    if (from) {
+        search.body.query = {
+            range: {
+                id: {
+                    gte: from
+                }
+            }
+        };
+    }
+    esClient.search(search).then((r) => {
+        res.send(r.hits);
+    });
+});
+exports.searchRouter.get('/user', (req, res) => {
     let key = req.param('key');
     if (key) {
+        esClient.search({
+            index: "twitter",
+            q: 'user:' + key
+        }).then((r) => {
+            res.send(r.hits);
+        });
     }
     else {
-        res.send('Please specify the key.');
+        res.send('Please specify the user key.');
+    }
+});
+exports.searchRouter.get('/content', (req, res) => {
+    let key = req.param('key');
+    if (key) {
+        esClient.search({
+            index: "twitter",
+            q: 'content:' + key
+        }).then((r) => {
+            res.send(r.hits);
+        });
+    }
+    else {
+        res.send('Please specify the content key.');
+    }
+});
+exports.searchRouter.get('/geo', (req, res) => {
+    let lat = req.param('lat');
+    let lon = req.param('lon');
+    let dis = req.param('dis');
+    if (lat && lon && dis) {
+        esClient.search({
+            index: 'twitter',
+            body: {
+                query: {
+                    bool: {
+                        must: {
+                            match_all: {}
+                        },
+                        filter: {
+                            geo_distance: {
+                                distance: dis,
+                                location: {
+                                    lat: Number.parseFloat(lat),
+                                    lon: Number.parseFloat(lon)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }).then((r) => {
+            res.send(r.hits);
+        });
+    }
+    else {
+        res.send('Please specify the geo location.');
+    }
+});
+exports.searchRouter.get('/geo/name', (req, res) => {
+    let key = req.param('key');
+    if (key) {
+        esClient.search({
+            index: "twitter",
+            q: 'locName:' + key
+        }).then((r) => {
+            res.send(r.hits);
+        });
+    }
+    else {
+        res.send('Please specify the location name.');
     }
 });
 //# sourceMappingURL=search.route.js.map
