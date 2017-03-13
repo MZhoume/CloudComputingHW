@@ -1,84 +1,70 @@
-import { Component, Output, EventEmitter} from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { IndexServiceComponent } from './index.service';
 
 @Component({
     selector: 'index-app',
-    templateUrl:'./app/index/index.component.html',
-    styleUrls: ['./app/index/index.component.css']
+    templateUrl: './app/index/index.component.html',
+    styleUrls: ['./app/index/index.component.css'],
+    providers: [IndexServiceComponent]
 })
 export class IndexComponent {
     @Output() eventClick = new EventEmitter()
-    
+    constructor(private _httpService: IndexServiceComponent) { }
+
     navname = "TWEET MAP";
-    keywords = ["Xiao Long Bao", "Macaron", "Icecream"]
-    markers: marker[] = [ ] 
-    tweets = [
-        {
-        id: 1,
-        name: "Emily Hua",
-        date: '2017-03-10',
-        time: '10:00pm',
-        content: 'Chongqingxiaomain here at Hell kitchen is really delicious!'
-        },
-        {
-        id: 2,
-        name: 'Huffington Post',
-        date: '2017-03-11',
-        time: '12:00pm',
-        content: 'Hillary Clinton and her new haircut have clearly moved past 2016!'
-        },
-        {
-        id: 3,
-        name: 'The New York Times',
-        date: '2017-03-11',
-        time: '12:00pm',
-        content: 'A 3,000-year-old statue found in Cairo could be a likeness of Ramses, archaeologists say http://nyti.ms/2neN36o '
-    } ]
-    concated_pins = [	
-      {
-          content: "Love xiaolongbao here!",
-		  lat: 40.8075355,
-		  lng: -73.9647614,
-		  label: 'CU',
-		  draggable: false
-	  },
-	  {   
-          content: "Amorino's icecream is always the best",
-		  lat: 40.7295134,
-		  lng: -73.9986496,
-		  label: 'NYU',
-		  draggable: false
-	  },
-	  {
-          content: "Wow, even better macaron than those from Paris!!!",
-		  lat: 40.758895,
-		  lng: -73.9873197,
-		  label: 'TS',
-		  draggable: false
-	  }]
-
-    handleClickMe(keyword) {
-        console.log ("user clicked ", keyword);
-        this.eventClick.emit(keyword); // send to backend!
-        // remove marker missing implementation
-        this.removeAllMarkers();
-        // add all pins to the map, right now it is hardcoded from concated_pins
-        for (var i = 0; i < this.concated_pins.length; i++) {
-            this.addPin(this.concated_pins[i].lat, this.concated_pins[i].lng, this.concated_pins[i].content);
-        }
-        
-    }
-
+    keywords = ["food", "juice", "cold", "trump", "bernie"];
+    markers: marker[] = [];
+    tweets = [];
+    tweetByKeyword: any;
+    tweetByGeo: any;
+    tweetListHeader: string;
+    inputRadius: string; // create radius based on user input
+    searchRadius: number = 10; // default radius number
 
     // map related
-    zoom: number = 12;
-
+    zoom: number = 10;
     lat: number = 40.8075355;
     lng: number = -73.9547614;
 
-    clickedMarker(m: marker, $event: MouseEvent) {
-         console.log("clicked the marker: ", m, $event)
+    handleClickMe(keyword) {
+        console.log("user clicked ", keyword);
+        this.eventClick.emit(keyword); // send to backend!
+        // remove all markers on the map
+        this.removeAllMarkers();
+        // get me tweets
+        this._httpService.getTweetByKeyword(keyword).subscribe(
+            data => {
+                this.tweetByKeyword = data;
+            },
+            error => alert(error),
+            () => {
+                this.tweetListHeader ="Tweets Sample Display";
+                this.tweets = this.tweetByKeyword.slice(0,3);
+                for (var i = 0; i < this.tweetByKeyword.length; i++) {
+                    this.addPin(this.tweetByKeyword[i]._source.location.lat, this.tweetByKeyword[i]._source.location.lon, this.tweetByKeyword[i]._source.content);
+                }
+            }
+        );
     }
-  
+
+    clickedMarker(m: marker, $event: MouseEvent) {
+        console.log("clicked the marker: ", m, $event)
+    }
+    callGeo(lat, lng, radius) {
+        // get me tweets
+        this._httpService.getTweetByGeo(lat, lng, radius).subscribe(
+            data => this.tweetByGeo = data,
+            error => alert(error),
+            () => {
+                this.tweetListHeader = "Top 3 Closest Tweets to Your Newly Designated Location!"
+                this.tweets = this.tweetByGeo.slice(0,3);
+                for (var i = 0; i < this.tweetByGeo.length; i++) {
+                    this.addPin(this.tweetByGeo[i]._source.location.lat, this.tweetByGeo[i]._source.location.lon, this.tweetByGeo[i]._source.content);
+                }
+            }
+        );
+    }
     mapClicked($event: any) {
         var newMarker = {
             name: "New Marker",
@@ -87,9 +73,10 @@ export class IndexComponent {
             lng: $event.coords.lng,
             draggable: true,
             iconUrl: 'http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Marker-Inside-Pink-icon.png'
-    }
+        }
         this.markers.push(newMarker);
-        console.log("placed the marker: ", newMarker.lat, newMarker.lng )
+        console.log("placed the marker: ", newMarker.lat, newMarker.lng);
+        this.callGeo(newMarker.lat, newMarker.lng, this.searchRadius);
     }
 
     markerDragEnd(m: marker, $event: any) {
@@ -99,17 +86,13 @@ export class IndexComponent {
             name: m.name,
             lat: m.lat,
             lng: m.lat,
-            draggle:false,
+            draggle: false,
             iconUrl: 'http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Marker-Inside-Pink-icon.png'
         }
-
         var newLat = $event.coords.lat;
         var newLng = $event.coords.lng;
+        this.callGeo(newLat, newLng, this.searchRadius);
     }
-    // create radius based on user input
-    inputRadius: string;
-
-    searchRadius: number = 10; // default radius number
 
     handleInputRadius() {
         console.log("creating radius...", parseFloat(this.inputRadius));
@@ -123,8 +106,7 @@ export class IndexComponent {
     markerLng: string;
     markerDraggle: string;
     addMarkerFromForm() {
-        console.log("adding markerer...");
-        if(this.markerDraggle == "yes") {
+        if (this.markerDraggle === "yes") {
             var isDraggable = true;
         } else {
             var isDraggable = false;
@@ -137,7 +119,7 @@ export class IndexComponent {
             iconUrl: "http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Marker-Outside-Pink-icon.png"
         }
         this.markers.push(newMarker);
-
+        this.callGeo(newMarker.lat, newMarker.lng, this.searchRadius);
     }
 
     // add tweet pins to the map 
@@ -149,7 +131,7 @@ export class IndexComponent {
             draggable: false,
             iconUrl: "http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Ball-Pink-icon.png"
         }
-        this.markers.push(newPin);  
+        this.markers.push(newPin);
 
     }
     // remove marker from the map
@@ -162,15 +144,15 @@ export class IndexComponent {
         console.log("wiping the map...")
         this.removeAllMarkers();
     }
-  // end of map
+    // end of map
 }
 // just an interface for type safety
 interface marker {
     content?: string;
     name?: string;
-	lat: number;
-	lng: number;
-	label?: string;
-	draggable: boolean;
+    lat: number;
+    lng: number;
+    label?: string;
+    draggable: boolean;
     iconUrl?: string
 }

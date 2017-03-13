@@ -9,74 +9,51 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var index_service_1 = require('./index.service');
 var IndexComponent = (function () {
-    function IndexComponent() {
+    function IndexComponent(_httpService) {
+        this._httpService = _httpService;
         this.eventClick = new core_1.EventEmitter();
         this.navname = "TWEET MAP";
-        this.keywords = ["Xiao Long Bao", "Macaron", "Icecream"];
+        this.keywords = ["food", "juice", "cold", "trump", "bernie"];
         this.markers = [];
-        this.tweets = [
-            {
-                id: 1,
-                name: "Emily Hua",
-                date: '2017-03-10',
-                time: '10:00pm',
-                content: 'Chongqingxiaomain here at Hell kitchen is really delicious!'
-            },
-            {
-                id: 2,
-                name: 'Huffington Post',
-                date: '2017-03-11',
-                time: '12:00pm',
-                content: 'Hillary Clinton and her new haircut have clearly moved past 2016!'
-            },
-            {
-                id: 3,
-                name: 'The New York Times',
-                date: '2017-03-11',
-                time: '12:00pm',
-                content: 'A 3,000-year-old statue found in Cairo could be a likeness of Ramses, archaeologists say http://nyti.ms/2neN36o '
-            }];
-        this.concated_pins = [
-            {
-                content: "Love xiaolongbao here!",
-                lat: 40.8075355,
-                lng: -73.9647614,
-                label: 'CU',
-                draggable: false
-            },
-            {
-                content: "Amorino's icecream is always the best",
-                lat: 40.7295134,
-                lng: -73.9986496,
-                label: 'NYU',
-                draggable: false
-            },
-            {
-                content: "Wow, even better macaron than those from Paris!!!",
-                lat: 40.758895,
-                lng: -73.9873197,
-                label: 'TS',
-                draggable: false
-            }];
+        this.tweets = [];
+        this.searchRadius = 10; // default radius number
         // map related
-        this.zoom = 12;
+        this.zoom = 10;
         this.lat = 40.8075355;
         this.lng = -73.9547614;
-        this.searchRadius = 10; // default radius number
     }
     IndexComponent.prototype.handleClickMe = function (keyword) {
+        var _this = this;
         console.log("user clicked ", keyword);
         this.eventClick.emit(keyword); // send to backend!
-        // remove marker missing implementation
+        // remove all markers on the map
         this.removeAllMarkers();
-        // add all pins to the map, right now it is hardcoded from concated_pins
-        for (var i = 0; i < this.concated_pins.length; i++) {
-            this.addPin(this.concated_pins[i].lat, this.concated_pins[i].lng, this.concated_pins[i].content);
-        }
+        // get me tweets
+        this._httpService.getTweetByKeyword(keyword).subscribe(function (data) {
+            _this.tweetByKeyword = data;
+        }, function (error) { return alert(error); }, function () {
+            _this.tweetListHeader = "Tweets Sample Display";
+            _this.tweets = _this.tweetByKeyword.slice(0, 3);
+            for (var i = 0; i < _this.tweetByKeyword.length; i++) {
+                _this.addPin(_this.tweetByKeyword[i]._source.location.lat, _this.tweetByKeyword[i]._source.location.lon, _this.tweetByKeyword[i]._source.content);
+            }
+        });
     };
     IndexComponent.prototype.clickedMarker = function (m, $event) {
         console.log("clicked the marker: ", m, $event);
+    };
+    IndexComponent.prototype.callGeo = function (lat, lng, radius) {
+        var _this = this;
+        // get me tweets
+        this._httpService.getTweetByGeo(lat, lng, radius).subscribe(function (data) { return _this.tweetByGeo = data; }, function (error) { return alert(error); }, function () {
+            _this.tweetListHeader = "Top 3 Closest Tweets to Your Newly Designated Location!";
+            _this.tweets = _this.tweetByGeo.slice(0, 3);
+            for (var i = 0; i < _this.tweetByGeo.length; i++) {
+                _this.addPin(_this.tweetByGeo[i]._source.location.lat, _this.tweetByGeo[i]._source.location.lon, _this.tweetByGeo[i]._source.content);
+            }
+        });
     };
     IndexComponent.prototype.mapClicked = function ($event) {
         var newMarker = {
@@ -89,6 +66,7 @@ var IndexComponent = (function () {
         };
         this.markers.push(newMarker);
         console.log("placed the marker: ", newMarker.lat, newMarker.lng);
+        this.callGeo(newMarker.lat, newMarker.lng, this.searchRadius);
     };
     IndexComponent.prototype.markerDragEnd = function (m, $event) {
         console.log('draged the marker to: ', m, $event);
@@ -102,14 +80,14 @@ var IndexComponent = (function () {
         };
         var newLat = $event.coords.lat;
         var newLng = $event.coords.lng;
+        this.callGeo(newLat, newLng, this.searchRadius);
     };
     IndexComponent.prototype.handleInputRadius = function () {
         console.log("creating radius...", parseFloat(this.inputRadius));
         this.searchRadius = parseFloat(this.inputRadius);
     };
     IndexComponent.prototype.addMarkerFromForm = function () {
-        console.log("adding markerer...");
-        if (this.markerDraggle == "yes") {
+        if (this.markerDraggle === "yes") {
             var isDraggable = true;
         }
         else {
@@ -123,6 +101,7 @@ var IndexComponent = (function () {
             iconUrl: "http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Marker-Outside-Pink-icon.png"
         };
         this.markers.push(newMarker);
+        this.callGeo(newMarker.lat, newMarker.lng, this.searchRadius);
     };
     // add tweet pins to the map 
     IndexComponent.prototype.addPin = function (latitude, longitude, content) {
@@ -153,9 +132,10 @@ var IndexComponent = (function () {
         core_1.Component({
             selector: 'index-app',
             templateUrl: './app/index/index.component.html',
-            styleUrls: ['./app/index/index.component.css']
+            styleUrls: ['./app/index/index.component.css'],
+            providers: [index_service_1.IndexServiceComponent]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [index_service_1.IndexServiceComponent])
     ], IndexComponent);
     return IndexComponent;
 }());

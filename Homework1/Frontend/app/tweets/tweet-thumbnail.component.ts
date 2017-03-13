@@ -4,8 +4,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     selector: 'tweet-thumbnail',
     template:`
     <div class = "well hoverwell thumbnail">
-        <h6>{{tweet?.content}}</h6>
-        <div *ngIf="tweet?.name">Source: {{tweet?.name}} Date: {{tweet?.date}} </div>
+        <h6>{{tweet?._source.content}}</h6>
+        <div *ngIf="tweet?._source.user">Source: {{tweet?._source.user}} | Date: {{tweet?._source.time}} </div>
     </div>
     `,
     styles: [`

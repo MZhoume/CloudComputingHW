@@ -27,7 +27,7 @@
         <input type="text" [(ngModel)]="markerLng" name="markerLng" placeholder="-73.9647614">
 
         <label>Draggable</label>
-        <select [(ngModel)]="markerDraggable" name="markerDraggable">
+        <select type="text" [(ngModel)]="markerDraggle" name="markerDraggle">
             <option value="no">No</option>
             <option value="yes">Yes</option>
         </select>
@@ -38,7 +38,7 @@
 </div>
 <div>
      <button type="button" class="btn btn-default btn" (click)="handleWipeMap()"><h6>Wipe the Map!</h6></button>
-    <h5>Top 3 Closest Tweets to Your Designated Location(s)!</h5>
+    <h5>{{tweetListHeader}}</h5>
     <form id="searchForm"  class="navbar-form navbar-right"  (submit)="handleInputRadius()" >
         <label>Input Radius</label>
         <select [(ngModel)]="inputRadius" name="inputRadius">
@@ -55,6 +55,10 @@
         </div>
     </div>
 </div>
+<!--<button (click)="onTestGetKeyword()">Test search by keyword</button><br>
+<p>Output: {{keywordTweet}}</p>
+<button (click)="onTestGetGeo()">Test search by geo location</button><br>
+<p>Output: {{geoTweet}}</p>-->
 <sebm-google-map 
     [latitude]="lat"
     [longitude]="lng"
