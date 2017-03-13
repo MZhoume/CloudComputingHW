@@ -57,7 +57,7 @@ export class IndexComponent {
             data => this.tweetByGeo = data,
             error => alert(error),
             () => {
-                this.tweetListHeader = "Top 3 Closest Tweets to Your Newly Designated Location!"
+                this.tweetListHeader = "Top 3 Tweets Cloest to Your Newly Designated Location!"
                 this.tweets = this.tweetByGeo.slice(0,3);
                 for (var i = 0; i < this.tweetByGeo.length; i++) {
                     this.addPin(this.tweetByGeo[i]._source.location.lat, this.tweetByGeo[i]._source.location.lon, this.tweetByGeo[i]._source.content);
