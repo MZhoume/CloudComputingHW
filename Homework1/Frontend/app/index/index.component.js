@@ -63,6 +63,7 @@ var IndexComponent = (function () {
         this.zoom = 12;
         this.lat = 40.8075355;
         this.lng = -73.9547614;
+        this.searchRadius = 10; // default radius number
     }
     IndexComponent.prototype.handleClickMe = function (keyword) {
         console.log("user clicked ", keyword);
@@ -101,6 +102,10 @@ var IndexComponent = (function () {
         };
         var newLat = $event.coords.lat;
         var newLng = $event.coords.lng;
+    };
+    IndexComponent.prototype.handleInputRadius = function () {
+        console.log("creating radius...", parseFloat(this.inputRadius));
+        this.searchRadius = parseFloat(this.inputRadius);
     };
     IndexComponent.prototype.addMarkerFromForm = function () {
         console.log("adding markerer...");

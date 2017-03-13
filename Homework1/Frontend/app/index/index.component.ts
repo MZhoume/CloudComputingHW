@@ -67,6 +67,8 @@ export class IndexComponent {
         }
         
     }
+
+
     // map related
     zoom: number = 12;
 
@@ -104,13 +106,23 @@ export class IndexComponent {
         var newLat = $event.coords.lat;
         var newLng = $event.coords.lng;
     }
+    // create radius based on user input
+    inputRadius: string;
+
+    searchRadius: number = 10; // default radius number
+
+    handleInputRadius() {
+        console.log("creating radius...", parseFloat(this.inputRadius));
+        this.searchRadius = parseFloat(this.inputRadius);
+
+    }
 
     // add marker from the form to the map
     markerName: string;
     markerLat: string;
     markerLng: string;
     markerDraggle: string;
-    addMarkerFromForm(){
+    addMarkerFromForm() {
         console.log("adding markerer...");
         if(this.markerDraggle == "yes") {
             var isDraggable = true;

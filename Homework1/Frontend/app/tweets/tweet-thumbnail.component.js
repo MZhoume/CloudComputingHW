@@ -28,7 +28,7 @@ var TweetThumbnailComponent = (function () {
         core_1.Component({
             selector: 'tweet-thumbnail',
             template: "\n    <div class = \"well hoverwell thumbnail\">\n        <h6>{{tweet?.content}}</h6>\n        <div *ngIf=\"tweet?.name\">Source: {{tweet?.name}} Date: {{tweet?.date}} </div>\n    </div>\n    ",
-            styles: ["\n    .thumbnail { min-height: 120px; width: 355px }\n    .well div {color: #bbb; font-size: 10px; margin-top:0px}\n    "]
+            styles: ["\n    .thumbnail { min-height: 120px; width: 360px }\n    .well div {color: #bbb; font-size: 10px; margin-top:0px}\n    "]
         }), 
         __metadata('design:paramtypes', [])
     ], TweetThumbnailComponent);
