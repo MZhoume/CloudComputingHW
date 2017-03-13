@@ -8,7 +8,7 @@ exports.searchRouter.get('/all', (req, res) => {
     let search = {
         index: "twitter",
         body: {
-            size: 1000,
+            size: 300,
             sort: [
                 { id: { order: "desc" } }
             ],
@@ -26,7 +26,7 @@ exports.searchRouter.get('/all', (req, res) => {
         };
     }
     esClient.search(search).then((r) => {
-        res.send(r.hits);
+        res.send(r.hits.hits);
     });
 });
 exports.searchRouter.get('/user', (req, res) => {
@@ -36,7 +36,7 @@ exports.searchRouter.get('/user', (req, res) => {
             index: "twitter",
             q: 'user:' + key
         }).then((r) => {
-            res.send(r.hits);
+            res.send(r.hits.hits);
         });
     }
     else {
@@ -50,7 +50,7 @@ exports.searchRouter.get('/content', (req, res) => {
             index: "twitter",
             q: 'content:' + key
         }).then((r) => {
-            res.send(r.hits);
+            res.send(r.hits.hits);
         });
     }
     else {
@@ -80,10 +80,20 @@ exports.searchRouter.get('/geo', (req, res) => {
                             }
                         }
                     }
+                },
+                sort: {
+                    _geo_distance: {
+                        location: {
+                            lat: Number.parseFloat(lat),
+                            lon: Number.parseFloat(lon)
+                        },
+                        order: "asc",
+                        unit: "km"
+                    }
                 }
             }
         }).then((r) => {
-            res.send(r.hits);
+            res.send(r.hits.hits);
         });
     }
     else {
@@ -97,7 +107,7 @@ exports.searchRouter.get('/geo/name', (req, res) => {
             index: "twitter",
             q: 'locName:' + key
         }).then((r) => {
-            res.send(r.hits);
+            res.send(r.hits.hits);
         });
     }
     else {

@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Twit = require("twit");
 const location_1 = require("./location");
-const ES = require("elasticsearch");
 const tweet_1 = require("./tweet");
+const esservice_1 = require("../elasticsearch/esservice");
 class TwitterStreamRetriever {
-    constructor(twitConfig, esConfig) {
+    constructor(twitConfig) {
         this.twit = new Twit(twitConfig);
-        this.esClient = new ES.Client(esConfig);
+        this.esClient = esservice_1.EsService.getEsClient();
     }
     bootstrap() {
         // if (!this.esClient.indices.exists({

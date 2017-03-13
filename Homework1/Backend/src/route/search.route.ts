@@ -8,7 +8,7 @@ searchRouter.get('/all', (req, res) => {
     let search = {
         index: "twitter",
         body: {
-            size: 1000,
+            size: 300,
             sort: [
                 {id: {order: "desc"}}
             ],
@@ -28,7 +28,7 @@ searchRouter.get('/all', (req, res) => {
     }
 
     esClient.search(search).then((r) => {
-        res.send(r.hits);
+        res.send(r.hits.hits);
     });
 });
 
@@ -39,7 +39,7 @@ searchRouter.get('/user', (req, res) => {
             index: "twitter",
             q: 'user:' + key
         }).then((r) => {
-            res.send(r.hits);
+            res.send(r.hits.hits);
         });
     } else {
         res.send('Please specify the user key.');
@@ -53,7 +53,7 @@ searchRouter.get('/content', (req, res) => {
             index: "twitter",
             q: 'content:' + key
         }).then((r) => {
-            res.send(r.hits);
+            res.send(r.hits.hits);
         });
     } else {
         res.send('Please specify the content key.');
@@ -83,10 +83,20 @@ searchRouter.get('/geo', (req, res) => {
                             }
                         }
                     }
+                },
+                sort: {
+                    _geo_distance: {
+                        location: {
+                            lat: Number.parseFloat(lat),
+                            lon: Number.parseFloat(lon)
+                        },
+                        order: "asc",
+                        unit: "km"
+                    }
                 }
             }
         }).then((r) => {
-            res.send(r.hits);
+            res.send(r.hits.hits);
         });
     } else {
         res.send('Please specify the geo location.');
@@ -100,7 +110,7 @@ searchRouter.get('/geo/name', (req, res) => {
             index: "twitter",
             q: 'locName:' + key
         }).then((r) => {
-            res.send(r.hits);
+            res.send(r.hits.hits);
         });
     } else {
         res.send('Please specify the location name.');

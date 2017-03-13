@@ -2,14 +2,15 @@ import * as Twit from 'twit';
 import {location} from './location';
 import * as ES from 'elasticsearch'
 import {Tweet, TweetLoc} from "./tweet";
+import {EsService} from "../elasticsearch/esservice";
 
 export class TwitterStreamRetriever {
     private twit: Twit;
     private esClient: ES.Client;
 
-    constructor(twitConfig: Twit.Options, esConfig: ES.ConfigOptions) {
+    constructor(twitConfig: Twit.Options) {
         this.twit = new Twit(twitConfig);
-        this.esClient = new ES.Client(esConfig);
+        this.esClient = EsService.getEsClient();
     }
 
     bootstrap() {
