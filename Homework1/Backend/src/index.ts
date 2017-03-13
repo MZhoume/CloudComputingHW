@@ -3,20 +3,24 @@ import * as bodyParser from 'body-parser';
 import { join } from 'path';
 import { normalizePort } from './helper';
 import { TwitterStreamRetriever } from './twitter/stream';
-import { twitConfig } from './config';
+import {twitConfig, esConfig} from './config';
 
 import { indexRoute } from './route/index.route';
 import { searchRouter } from './route/search.route';
 
-const port = normalizePort(process.env.PORT || 3000);
+const port = normalizePort(process.env.PORT || 8081);
 
-export const app: e.Application = e();
+const app: e.Application = e();
 
 // static settings
 {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(e.static(join(__dirname, 'www')));
+    app.use((req, res, next) => {
+        console.log(req.path);
+        next();
+    });
 }
 
 // routes settings
@@ -45,4 +49,4 @@ app.listen(port, () => {
     console.log(`App started on port: ${port}...`);
 });
 
-new TwitterStreamRetriever(twitConfig, null).bootstrap();
+new TwitterStreamRetriever(twitConfig, esConfig).bootstrap();

@@ -1,5 +1,5 @@
 import * as Twit from 'twit';
-import { location } from './location';
+import {location} from './location';
 import * as ES from 'elasticsearch'
 import {Tweet, TweetLoc} from "./tweet";
 
@@ -9,15 +9,38 @@ export class TwitterStreamRetriever {
 
     constructor(twitConfig: Twit.Options, esConfig: ES.ConfigOptions) {
         this.twit = new Twit(twitConfig);
-        // this.esClient = new ES.Client(esConfig);
+        this.esClient = new ES.Client(esConfig);
     }
 
     bootstrap() {
-        let stream: NodeJS.ReadableStream = this.twit.stream('statuses/filter', <Twit.Params>{ locations: location.NewYork });
+        if (!this.esClient.indices.exists({
+                index: 'twitter'
+            })) {
+            this.esClient.indices.create({
+                index: "twitter",
+                body: {
+                    "mappings": {
+                        "tweet": {
+                            "properties": {
+                                "location": {"type": "geo_point"},
+                                "id": {"type": "string"},
+                                "content": {"type": "string"},
+                                "user": {"type": "string"},
+                                "time": {"type": "string"},
+                            }
+                        }
+                    }
+                }
+            }, (err, res) => {
+                console.log(err, res);
+            });
+        }
+
+        let stream: NodeJS.ReadableStream = this.twit.stream('statuses/filter', <Twit.Params>{locations: location.NewYork});
         stream.on('tweet', (tweet) => {
             let t = new Tweet();
             t.location = new TweetLoc();
-            t.id = tweet.id;
+            t.id = tweet.id.toString();
             t.content = tweet.text;
             t.user = tweet.user.name;
             t.time = tweet.created_at;
@@ -33,6 +56,15 @@ export class TwitterStreamRetriever {
             if (tweet.place) {
                 t.location.name = tweet.place.full_name;
             }
+
+            this.esClient.create({
+                index: 'twitter',
+                type: 'tweet',
+                id: t.id.toString(),
+                body: t
+            }, (err, res) => {
+                console.log(err, res);
+            });
         });
     }
 }
