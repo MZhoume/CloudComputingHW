@@ -1,0 +1,19 @@
+branch-defaults:
+  default:
+    environment: homework1-env
+    group_suffix: null
+deploy:
+  artifact: app.zip
+environment-defaults:
+  homework1-env:
+    branch: null
+    repository: null
+global:
+  application_name: CCHomeworkEB
+  branch: null
+  default_ec2_keyname: cc-eb-key
+  default_platform: Node.js
+  default_region: us-east-1
+  profile: null
+  repository: null
+  sc: null

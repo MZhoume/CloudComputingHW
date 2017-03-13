@@ -45,4 +45,4 @@ app.listen(port, () => {
     console.log(`App started on port: ${port}...`);
 });
 
-// new TwitterStreamRetriever(twitConfig).bootstrap();
+new TwitterStreamRetriever(twitConfig, null).bootstrap();
