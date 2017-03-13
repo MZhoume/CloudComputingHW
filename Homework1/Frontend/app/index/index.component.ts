@@ -13,7 +13,7 @@ export class IndexComponent {
     constructor(private _httpService: IndexServiceComponent) { }
 
     navname = "TWEET MAP";
-    keywords = ["food", "juice", "cold", "trump", "bernie"];
+    keywords = ["food", "juice", "cold", "trump", "spring"];
     markers: marker[] = [];
     tweets = [];
     tweetByKeyword: any;
@@ -40,7 +40,9 @@ export class IndexComponent {
             error => alert(error),
             () => {
                 this.tweetListHeader ="Tweets Sample Display";
+                console.log(this.tweetByKeyword.length);
                 this.tweets = this.tweetByKeyword.slice(0,3);
+                console.log(this.tweetByKeyword.length);
                 for (var i = 0; i < this.tweetByKeyword.length; i++) {
                     this.addPin(this.tweetByKeyword[i]._source.location.lat, this.tweetByKeyword[i]._source.location.lon, this.tweetByKeyword[i]._source.content);
                 }

@@ -15,7 +15,7 @@ var IndexComponent = (function () {
         this._httpService = _httpService;
         this.eventClick = new core_1.EventEmitter();
         this.navname = "TWEET MAP";
-        this.keywords = ["food", "juice", "cold", "trump", "bernie"];
+        this.keywords = ["food", "juice", "cold", "trump", "spring"];
         this.markers = [];
         this.tweets = [];
         this.searchRadius = 10; // default radius number
@@ -35,7 +35,9 @@ var IndexComponent = (function () {
             _this.tweetByKeyword = data;
         }, function (error) { return alert(error); }, function () {
             _this.tweetListHeader = "Tweets Sample Display";
+            console.log(_this.tweetByKeyword.length);
             _this.tweets = _this.tweetByKeyword.slice(0, 3);
+            console.log(_this.tweetByKeyword.length);
             for (var i = 0; i < _this.tweetByKeyword.length; i++) {
                 _this.addPin(_this.tweetByKeyword[i]._source.location.lat, _this.tweetByKeyword[i]._source.location.lon, _this.tweetByKeyword[i]._source.content);
             }
@@ -48,7 +50,7 @@ var IndexComponent = (function () {
         var _this = this;
         // get me tweets
         this._httpService.getTweetByGeo(lat, lng, radius).subscribe(function (data) { return _this.tweetByGeo = data; }, function (error) { return alert(error); }, function () {
-            _this.tweetListHeader = "Top 3 Closest Tweets to Your Newly Designated Location!";
+            _this.tweetListHeader = "Top 3 Tweets Cloest to Your Newly Designated Location!";
             _this.tweets = _this.tweetByGeo.slice(0, 3);
             for (var i = 0; i < _this.tweetByGeo.length; i++) {
                 _this.addPin(_this.tweetByGeo[i]._source.location.lat, _this.tweetByGeo[i]._source.location.lon, _this.tweetByGeo[i]._source.content);
