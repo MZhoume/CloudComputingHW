@@ -8,7 +8,7 @@ const stream_1 = require("./twitter/stream");
 const config_1 = require("./config");
 const index_route_1 = require("./route/index.route");
 const search_route_1 = require("./route/search.route");
-const port = helper_1.normalizePort(process.env.PORT || 8081);
+const port = helper_1.normalizePort(process.env.PORT || 3000);
 const app = e();
 // static settings
 {
@@ -40,8 +40,8 @@ const app = e();
         });
     });
 }
+new stream_1.TwitterStreamRetriever(config_1.twitConfig).bootstrap();
 app.listen(port, () => {
     console.log(`App started on port: ${port}...`);
 });
-new stream_1.TwitterStreamRetriever(config_1.twitConfig).bootstrap();
 //# sourceMappingURL=index.js.map

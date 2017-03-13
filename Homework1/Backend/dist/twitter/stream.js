@@ -1,67 +1,45 @@
+/*
+ curl -XDELETE 'localhost:9200/twitter' && curl -XPUT 'localhost:9200/twitter' -H 'Content-Type: application/json' -d'
+ {
+ "mappings": {
+ "tweet": {
+ "properties": {
+ "location": {
+ "type": "geo_point"
+ },
+ "locName": {
+ "type": "string"
+ },
+ "id": {
+ "type": "long"
+ },
+ "content": {
+ "type": "string"
+ },
+ "user": {
+ "type": "string"
+ },
+ "time": {
+ "type": "date"
+ }
+ }
+ }
+ }
+ }
+ '
+ */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Twit = require("twit");
 const location_1 = require("./location");
 const tweet_1 = require("./tweet");
 const esservice_1 = require("../elasticsearch/esservice");
+const esClient = esservice_1.EsService.getEsClient();
 class TwitterStreamRetriever {
     constructor(twitConfig) {
         this.twit = new Twit(twitConfig);
-        this.esClient = esservice_1.EsService.getEsClient();
     }
     bootstrap() {
-        // if (!this.esClient.indices.exists({
-        //         index: 'twitter'
-        //     })) {
-        //     this.esClient.indices.create({
-        //         index: "twitter",
-        //         body: {
-        //             mappings: {
-        //                 tweet: {
-        //                     properties: {
-        //                         location: {type: "geo_point"},
-        //                         locName: {type: "string"},
-        //                         id: {type: "string"},
-        //                         content: {type: "string"},
-        //                         user: {type: "string"},
-        //                         time: {type: "string"},
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }, (err, res) => {
-        //         console.log(err, res);
-        //     });
-        // }
-        /*       curl -XPUT 'localhost:9200/twitter?pretty' -H 'Content-Type: application/json' -d'
-                 {
-                 "mappings": {
-                 "tweet": {
-                 "properties": {
-                 "location": {
-                 "type": "geo_point"
-                 },
-                 "locName": {
-                 "type": "string"
-                 },
-                 "id": {
-                 "type": "long"
-                 },
-                 "content": {
-                 "type": "string"
-                 },
-                 "user": {
-                 "type": "string"
-                 },
-                 "time": {
-                 "type": "date"
-                 }
-                 }
-                 }
-                 }
-                 }
-                 '
-        */
         let stream = this.twit.stream('statuses/filter', { locations: location_1.location.NewYork });
         stream.on('tweet', (tweet) => {
             let t = new tweet_1.Tweet();
@@ -81,7 +59,7 @@ class TwitterStreamRetriever {
             if (tweet.place) {
                 t.locName = tweet.place.full_name;
             }
-            this.esClient.create({
+            esClient.create({
                 index: 'twitter',
                 type: 'tweet',
                 id: t.id.toString(),
