@@ -37,7 +37,16 @@ searchRouter.get('/user', (req, res) => {
     if (key) {
         esClient.search({
             index: "twitter",
-            q: 'user:' + key
+            body: {
+                query: {
+                    match: {
+                        user: key
+                    }
+                },
+                sort: [
+                    {id: {order: "desc"}}
+                ]
+            }
         }).then((r) => {
             res.send(r.hits.hits);
         });
@@ -51,7 +60,16 @@ searchRouter.get('/content', (req, res) => {
     if (key) {
         esClient.search({
             index: "twitter",
-            q: 'content:' + key
+            body: {
+                query: {
+                    match: {
+                        content: key
+                    }
+                },
+                sort: [
+                    {id: {order: "desc"}}
+                ]
+            }
         }).then((r) => {
             res.send(r.hits.hits);
         });
@@ -108,7 +126,16 @@ searchRouter.get('/geo/name', (req, res) => {
     if (key) {
         esClient.search({
             index: "twitter",
-            q: 'locName:' + key
+            body: {
+                query: {
+                    match: {
+                        locName: key
+                    }
+                },
+                sort: [
+                    {id: {order: "desc"}}
+                ]
+            }
         }).then((r) => {
             res.send(r.hits.hits);
         });
