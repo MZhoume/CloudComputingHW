@@ -1,0 +1,80 @@
+<div class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header"> <a class="navbar-brand" >{{navname}}</a></div>
+
+    <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+        <li class="dropdown" >
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
+            Search Tweets By Keywords
+            <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+            <li >
+                <a *ngFor="let keyword of keywords" (click)="handleClickMe(keyword)">{{keyword}}</a>
+            </li>
+            </ul>
+        </li>
+        </ul>
+        <form (submit)="addMarkerFromForm()">
+        <label>Location</label>
+        <input type="text" [(ngModel)]="markerName" name="markerName" placeholder="Columbia University">
+
+        <label>Latitude</label>
+        <input type="text" [(ngModel)]="markerLat" name="markerLat" placeholder="40.8075355">
+
+        <label>Longitude</label>
+        <input type="text" [(ngModel)]="markerLng" name="markerLng" placeholder="-73.9647614">
+
+        <label>Draggable</label>
+        <select type="text" [(ngModel)]="markerDraggle" name="markerDraggle">
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+        </select>
+        <button class="btn btn-default" >Map It!<img src="http://icons.iconarchive.com/icons/icons-land/vista-map-markers/24/Map-Marker-Marker-Inside-Pink-icon.png"></button>
+    </form>
+    </div>
+  </div>
+</div>
+<div>
+     <button type="button" class="btn btn-default btn" (click)="handleWipeMap()"><h6>Wipe the Map!</h6></button>
+    <h5>{{tweetListHeader}}</h5>
+    <form id="searchForm"  class="navbar-form navbar-right"  (submit)="handleInputRadius()" >
+        <label>Input Radius</label>
+        <select [(ngModel)]="inputRadius" name="inputRadius">
+            <option value="0.8">10 mins walk</option>
+            <option value="1.6">20 mins walk</option>
+            <option value="2.4">30 mins walk</option>
+            <option value="3.2">40 mins walk</option>
+        </select>
+        <button class="btn btn-default" >to Search!</button>
+    </form>
+     <div class="row">
+        <div *ngFor="let tweet of tweets" class="col-md-4">
+            <tweet-thumbnail (tweetClick)="handleTweetClicked($tweet)" [tweet]="tweet"></tweet-thumbnail>
+        </div>
+    </div>
+</div>
+<!--<button (click)="onTestGetKeyword()">Test search by keyword</button><br>
+<p>Output: {{keywordTweet}}</p>
+<button (click)="onTestGetGeo()">Test search by geo location</button><br>
+<p>Output: {{geoTweet}}</p>-->
+<sebm-google-map 
+    [latitude]="lat"
+    [longitude]="lng"
+    [zoom]="zoom"
+    (mapClick)="mapClicked($event)">
+
+ <sebm-google-map-marker 
+          *ngFor="let m of markers; let i = index"
+          (markerClick)="clickedMarker(m, $event)"
+          [latitude]="m.lat"
+          [longitude]="m.lng"
+          [label]="m.label"
+          [visible]="true"
+          [iconUrl]="m.iconUrl"
+          [markerDraggable]="m.draggable"
+          (dragEnd)="markerDragEnd(m, $event)">
+          <sebm-google-map-info-window><p>{{m.content}}</p></sebm-google-map-info-window>
+</sebm-google-map-marker>
+</sebm-google-map>
