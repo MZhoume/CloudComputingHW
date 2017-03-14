@@ -7,23 +7,13 @@ import { HttpModule } from '@angular/http';
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
 import { IndexComponent } from './index/index.component';
-// import { IndexServiceComponent } from './index/index.service'
-import { TweetsListComponent } from './tweets/tweets-list.component';
 import { TweetThumbnailComponent } from './tweets/tweet-thumbnail.component';
-import { NavBarComponent } from './nav/navbar.component';
-import { DropdownComponent } from './nav/dropdown.component';
-import { MarkerComponent} from './marker/marker.component';
-import { SearchMarkerComponent } from './marker/search-marker.component';
+
 
 @NgModule({
   declarations: [
     IndexComponent,
-    TweetsListComponent,
-    TweetThumbnailComponent,
-    NavBarComponent,
-    DropdownComponent,
-    MarkerComponent,
-    SearchMarkerComponent
+    TweetThumbnailComponent
   ],
   imports: [
     BrowserModule,

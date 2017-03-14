@@ -15,13 +15,7 @@ var http_1 = require('@angular/http');
 // import { AlertModule } from 'ng2-bootstrap';
 var core_2 = require('angular2-google-maps/core');
 var index_component_1 = require('./index/index.component');
-// import { IndexServiceComponent } from './index/index.service'
-var tweets_list_component_1 = require('./tweets/tweets-list.component');
 var tweet_thumbnail_component_1 = require('./tweets/tweet-thumbnail.component');
-var navbar_component_1 = require('./nav/navbar.component');
-var dropdown_component_1 = require('./nav/dropdown.component');
-var marker_component_1 = require('./marker/marker.component');
-var search_marker_component_1 = require('./marker/search-marker.component');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -29,12 +23,7 @@ var AppModule = (function () {
         core_1.NgModule({
             declarations: [
                 index_component_1.IndexComponent,
-                tweets_list_component_1.TweetsListComponent,
-                tweet_thumbnail_component_1.TweetThumbnailComponent,
-                navbar_component_1.NavBarComponent,
-                dropdown_component_1.DropdownComponent,
-                marker_component_1.MarkerComponent,
-                search_marker_component_1.SearchMarkerComponent
+                tweet_thumbnail_component_1.TweetThumbnailComponent
             ],
             imports: [
                 platform_browser_1.BrowserModule,
