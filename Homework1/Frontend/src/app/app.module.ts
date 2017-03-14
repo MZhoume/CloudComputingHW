@@ -4,18 +4,25 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AlertModule } from 'ng2-bootstrap';
-
+import { DropdownModule } from 'ng2-bootstrap/dropdown';
+import { AgmCoreModule } from 'angular2-google-maps/core';
 import { IndexComponent } from './index/index.component';
+import { TweetThumbnailComponent } from './tweets/tweet-thumbnail.component';
 
 @NgModule({
   declarations: [
-    IndexComponent
+    IndexComponent,
+    TweetThumbnailComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    AlertModule.forRoot()
+    AlertModule.forRoot(),
+    DropdownModule.forRoot(),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCvSxaeNAxaziOKTelih7xX3OxeCa6_2Zk'
+    })  
   ],
   providers: [],
   bootstrap: [IndexComponent]

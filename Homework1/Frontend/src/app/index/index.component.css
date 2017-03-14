@@ -1,0 +1,22 @@
+.dropdown-toggle {
+    front-size: 50px !important;
+    color: #F63687 !important;
+}
+.angular-google-map,
+.sebm-google-map-container {
+    height:65vh;
+    width: auto;
+}
+p {
+    color:black;
+}
+h5 {
+    padding-left: 15px;
+    display: inline-block;
+}
+
+h6 {
+    color: #F63687 !important;
+}
+
+
