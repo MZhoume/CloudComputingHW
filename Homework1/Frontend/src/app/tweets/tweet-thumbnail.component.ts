@@ -9,7 +9,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     </div>
     `,
     styles: [`
-    .thumbnail { min-height: 120px; width: 400px }
+    .thumbnail { min-height: 120px; width: 30vw }
     .well div {color: #bbb; font-size: 10px; margin-top:0px}
     `]
 })
