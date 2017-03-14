@@ -13,7 +13,7 @@ export class IndexComponent {
     constructor(private _httpService: IndexServiceComponent) { }
 
     navname = " ˇ◡TWEET MAP~♥";
-    keywords = ["food", "juice", "cold", "trump", "spring"];
+    keywords = ["stella", "snow", "cold", "trump", "food", "juice","spring"];
     markers: marker[] = [];
     tweets = [];
     tweetByKeyword: any;
