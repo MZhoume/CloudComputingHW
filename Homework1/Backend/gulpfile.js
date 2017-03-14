@@ -3,7 +3,7 @@ const del = require('del');
 const zip = require('gulp-zip');
 
 const paths = {
-    clean: ['dist/**', '!dist', '!dist/package.json', '!dist/node_modules', '!dist/node_modules/**'],
+    clean: ['dist/**', '!dist', '!dist/package.json', '!dist/node_modules', '!dist/node_modules/**', '!dist/www', '!dist/www/**'],
     dist: ['dist/**']
 };
 
