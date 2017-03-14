@@ -1,4 +1,12 @@
-Keys.json
+config.ts
+config.js
+config.js.map
+app.zip
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
 
 # Created by https://www.gitignore.io/api/macos,apachecordova,node
 

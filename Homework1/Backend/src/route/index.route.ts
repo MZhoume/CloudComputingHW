@@ -1,11 +1,7 @@
 import { Router } from 'express';
 
-export const index = Router();
+export const indexRoute: Router = Router();
 
-index.get('/', (req, res) => {
-    res.send('Hello index');
-});
-
-index.get('/hello', (req, res) => {
-    res.send('hello hello');
+indexRoute.get('/', (req, res) => {
+    res.send('Hello!');
 });

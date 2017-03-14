@@ -1,0 +1,15 @@
+branch-defaults:
+  default:
+    environment: cc-hw-env
+    group_suffix: null
+deploy:
+  artifact: app.zip
+global:
+  application_name: CCHomework
+  branch: null
+  default_ec2_keyname: eb-cc-hw
+  default_platform: Node.js
+  default_region: us-east-1
+  profile: null
+  repository: null
+  sc: null
