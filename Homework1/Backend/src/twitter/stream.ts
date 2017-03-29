@@ -20,7 +20,7 @@
  "type": "string"
  },
  "time": {
- "type": "date"
+ "type": "string"
  }
  }
  }

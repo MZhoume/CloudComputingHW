@@ -1,6 +1,6 @@
 branch-defaults:
   default:
-    environment: cc-hw-env
+    environment: pre-env
     group_suffix: null
 deploy:
   artifact: app.zip
