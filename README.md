@@ -2,6 +2,7 @@
 #### Ming Zhou (UNI: MZ2591), Emily Hua (UNI: YH2901)
 ***
 ### Homework 1
+url: http://pre-env.jih6zvtkdb.us-east-1.elasticbeanstalk.com/
 - **Backend**: Backend services, written in TypeScript with NodeJS and ExpressJS
 - **Frontend**: Frontend views, written in TypeScript with AngularJS v2
 - **ElasticBeanstalk**: Elastic Beanstalk configuration and app archive
