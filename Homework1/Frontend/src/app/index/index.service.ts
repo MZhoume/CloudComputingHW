@@ -9,7 +9,7 @@ import 'rxjs/add/operator/catch';
 export class IndexServiceComponent {
     constructor (private _http:Http) {}
 
-    private baseUrl = "http://cc-hw-env.jih6zvtkdb.us-east-1.elasticbeanstalk.com/search";
+    private baseUrl = "http://localhost/search";
 
     getTweetByKeyword(keyword) {
         var url = this.baseUrl + '/content?key=' + keyword
