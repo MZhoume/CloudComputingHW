@@ -4,7 +4,7 @@ import { EsClient } from '../elasticsearch/esclient';
 export const searchRouter: Router = Router();
 
 searchRouter.get('/all', (req, res) => {
-    let from = req.params('from');
+    let from = req.param('from');
 
     EsClient.search('twitter', {
         size: 50,
@@ -24,7 +24,7 @@ searchRouter.get('/all', (req, res) => {
 });
 
 searchRouter.get('/user', (req, res) => {
-    let key = req.params('key');
+    let key = req.param('key');
 
     EsClient.search('twitter', {
         query: {
@@ -41,7 +41,7 @@ searchRouter.get('/user', (req, res) => {
 });
 
 searchRouter.get('/content', (req, res) => {
-    let key = req.params('key');
+    let key = req.param('key');
 
     EsClient.search('twitter', {
         query: {
@@ -58,9 +58,9 @@ searchRouter.get('/content', (req, res) => {
 });
 
 searchRouter.get('/geo', (req, res) => {
-    let lat = req.params('lat');
-    let lon = req.params('lon');
-    let dis = req.params('dis');
+    let lat = req.param('lat');
+    let lon = req.param('lon');
+    let dis = req.param('dis');
 
     EsClient.search('twitter', {
         query: {
@@ -95,7 +95,7 @@ searchRouter.get('/geo', (req, res) => {
 });
 
 searchRouter.get('/geo/name', (req, res) => {
-    let key = req.params('key');
+    let key = req.param('key');
 
     EsClient.search('twitter', {
         query: {
