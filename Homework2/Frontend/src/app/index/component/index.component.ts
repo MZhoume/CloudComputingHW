@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { TweetMarker } from './marker';
-import { HttpService } from './httpservice';
-import { TweetEntry } from './tweetentry';
-import { Tweet } from './tweet';
-import { shallowEqualArrays } from '@angular/router/src/utils/collection';
+import { TweetMarker } from '../model/tweet-marker';
+import { HttpService } from '../httpservice';
+import { TweetEntry } from '../model/tweetentry';
+import { Tweet } from '../model/tweet';
 
 @Component({
     selector: 'app-root',
@@ -11,22 +10,18 @@ import { shallowEqualArrays } from '@angular/router/src/utils/collection';
     providers: [HttpService]
 })
 export class IndexComponent {
-    private httpSvc: HttpService;
-
     public lat: number = 40.7722314;
     public lng: number = -74.0135349;
 
+    private isRefreshing: boolean;
     public keyword: string = '';
-    private currMethod: Function;
 
     public tweets: TweetMarker[];
     public entries: TweetEntry[];
 
-    constructor(httpSvc: HttpService) {
-        this.httpSvc = httpSvc;
-
-        this.toggle();
-        setInterval(() => this.currMethod(), 3000);
+    constructor(private httpSvc: HttpService) {
+        this.reset();
+        setInterval(() => this.refresh(), 3000);
     }
 
     private clear() {
@@ -37,7 +32,9 @@ export class IndexComponent {
     private update(res: Tweet[]) {
         for (let i = res.length - 1; i >= 0; i--) {
             this.tweets.unshift({
+                user: res[i].user,
                 content: res[i].content,
+                time: res[i].time,
                 lat: res[i].location.lat,
                 lng: res[i].location.lon,
                 iconUrl: res[i].sentiment > 0 ? 'assets/happy.png' : res[i].sentiment < 0 ? 'assets/sad.png' : 'assets/neutral.png'
@@ -53,35 +50,37 @@ export class IndexComponent {
         }
     }
 
-    public toggle() {
-        this.clear();
-        if (this.keyword.length > 0) {
-            this.currMethod = () => {
-            };
-            this.search();
-        } else {
-            this.currMethod = this.refresh;
+    public reset() {
+        if (!this.isRefreshing) {
+            this.clear();
+            this.isRefreshing = true;
             this.refresh();
         }
     }
 
     public search() {
-        this.httpSvc.searchByKeyword(this.keyword)
-            .subscribe(
-                res => {
-                    this.update(res);
-                },
-                err => console.log(err)
-            );
+        if (this.keyword.length > 0) {
+            this.isRefreshing = false;
+            this.clear();
+            this.httpSvc.searchByKeyword(this.keyword)
+                .subscribe(
+                    res => {
+                        this.update(res);
+                    },
+                    err => console.log(err)
+                );
+        }
     }
 
     public refresh() {
-        this.httpSvc.getAll(this.entries.length > 0 ? this.entries[0].id.toString() : '0')
-            .subscribe(
-                res => {
-                    this.update(res);
-                },
-                err => console.log(err)
-            );
+        if (this.isRefreshing) {
+            this.httpSvc.getAll(this.entries.length > 0 ? this.entries[0].id.toString() : '0')
+                .subscribe(
+                    res => {
+                        this.update(res);
+                    },
+                    err => console.log(err)
+                );
+        }
     }
 }

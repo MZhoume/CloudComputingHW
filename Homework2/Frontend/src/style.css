@@ -9,10 +9,11 @@ html, body {
     display: block;
     position: absolute;
     height: calc(100% - 60px);
-    width: 290px;
-    left: 5px;
-    bottom: 5px;
+    width: 300px;
+    left: 10px;
+    bottom: 10px;
     top: 55px;
+    z-index: 99;
 }
 
 .fullscreen
@@ -23,6 +24,6 @@ html, body {
     height: 100%;
     bottom: 0;
     top: 0;
-    left: 300px;
+    left: 0;
     right: 0;
 }

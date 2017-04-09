@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
-import { IndexComponent } from './index/index.component';
+import { IndexComponent } from './index/component/index.component';
 
 @NgModule({
     declarations: [
