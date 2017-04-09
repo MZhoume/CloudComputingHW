@@ -27,4 +27,8 @@ export class HttpService {
     public searchByKeyword(keyword: string): Observable<any> {
         return this.get('/search/content?key=' + keyword);
     }
+
+    public searchByUser(user: string): Observable<any> {
+        return this.get('/search/user?key=' + user);
+    }
 }

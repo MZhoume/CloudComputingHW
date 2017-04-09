@@ -5,11 +5,18 @@
                 <span class="navbar-brand">Apollo</span>
             </div>
 
-            <form (submit)="search()" class="navbar-form navbar-left">
+            <form (submit)="searchContent()" class="navbar-form navbar-left">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Keyword" name="keyword" [(ngModel)]="keyword">
                 </div>
-                <button type="submit" class="btn btn-default">Search</button>
+                <button type="submit" class="btn btn-default">Search Content</button>
+            </form>
+
+            <form (submit)="searchUser()" class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Username" name="user" [(ngModel)]="user">
+                </div>
+                <button type="submit" class="btn btn-default">Search User</button>
             </form>
 
             <ul class="nav navbar-nav navbar-form navbar-right">
@@ -26,7 +33,7 @@
                 [ngClass]="{'list-group-item-success': t.sentiment > 0, 'list-group-item-danger': t.sentiment < 0}">
                 <strong>{{ t.user }} says: </strong>
                 <small>(on {{ t.time }})</small>
-                <br>
+                <hr>
                 {{ t.content }}
             </li>
         </ul>

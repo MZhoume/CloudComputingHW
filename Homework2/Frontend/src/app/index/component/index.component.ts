@@ -15,6 +15,7 @@ export class IndexComponent {
 
     private isRefreshing: boolean;
     public keyword: string = '';
+    public user: string = '';
 
     public tweets: TweetMarker[];
     public entries: TweetEntry[];
@@ -58,7 +59,21 @@ export class IndexComponent {
         }
     }
 
-    public search() {
+    public searchUser() {
+        if (this.user.length > 0) {
+            this.isRefreshing = false;
+            this.clear();
+            this.httpSvc.searchByUser(this.user)
+                .subscribe(
+                    res => {
+                        this.update(res);
+                    },
+                    err => console.log(err)
+                );
+        }
+    }
+
+    public searchContent() {
         if (this.keyword.length > 0) {
             this.isRefreshing = false;
             this.clear();

@@ -6,7 +6,7 @@ import { normalizePort, processHeader } from './helper';
 import { indexRouter } from './route/index.route';
 import { searchRouter } from './route/search.route';
 import { tweetRouter } from "./route/tweet.route";
-import { TwitterStreamRetriever } from "./twitter/stream";
+import { TwitterStreamRetriever } from "./tweet/stream";
 import { awsConfig, kafkaClientId, kafkaConnStr, twitConfig } from "./config";
 import { WorkerPool } from "./worker/worker-pool";
 import { SentimentAnalyzer } from "./watson/sentiment-analyzer";
