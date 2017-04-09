@@ -7,14 +7,14 @@ searchRouter.get('/all', (req, res) => {
     let from = req.params('from');
 
     EsClient.search('twitter', {
-        size: 100,
+        size: 50,
         sort: [
             { id: { order: 'desc' } }
         ],
         query: {
             range: {
                 id: {
-                    gte: from
+                    gt: from
                 }
             }
         }

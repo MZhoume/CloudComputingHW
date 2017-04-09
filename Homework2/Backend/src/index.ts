@@ -23,6 +23,8 @@ const app: e.Application = e();
     app.use(e.static(join(__dirname, 'www')));
     app.use((req, res, next) => {
         console.log(req.path);
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "X-Requested-With");
         next();
     });
 }
