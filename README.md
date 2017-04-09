@@ -4,6 +4,7 @@
 ***
 ### Homework 1
 url: http://pre-env.jih6zvtkdb.us-east-1.elasticbeanstalk.com/
+
 - **Backend**: Backend services, written in TypeScript with NodeJS and ExpressJS
 - **Frontend**: Frontend views, written in TypeScript with AngularJS v2
 - **ElasticBeanstalk**: Elastic Beanstalk configuration and app archive
@@ -24,9 +25,13 @@ Frontend:
 ***
 ### Homework 2
 url: http://ec2-52-70-84-118.compute-1.amazonaws.com/
+
 kibana url: http://ec2-52-70-84-118.compute-1.amazonaws.com:5601/
+
 kafka manager url: http://ec2-52-70-84-118.compute-1.amazonaws.com:9000/
+
 zookeeper url: http://ec2-52-70-84-118.compute-1.amazonaws.com:2181/
+
 - **Backend**: Backend services, written in TypeScript with NodeJS and ExpressJS, modular design
 - **Frontend**: Frontend views, written in TypeScript with AngularJS v2 and BootStrap
 
